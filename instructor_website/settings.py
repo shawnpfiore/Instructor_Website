@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-from pathlib import Path
+from typing import List
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.join(BASE_DIR, "instructor_website")
 
 # Quick-start development settings - unsuitable for production
@@ -25,8 +26,8 @@ SECRET_KEY = 'django-insecure-1eya)=-^suk0%&g@$zr8@_&nk@8sj@7)szl%^#w+9m3&t_q69t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# SECURITY WARNING: don't use a wildcard in production!
+ALLOWED_HOSTS: List[str] = ["*"]
 
 # Application definition
 
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'instructor_website.apps.accounts',
+    "instructor_website.apps.contact",
 ]
 
 MIDDLEWARE = [
@@ -69,17 +72,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'instructor_website.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST', default="")
+POSTGRES_DB = os.environ.get('POSTGRES_DB', default="")
+POSTGRES_USER = os.environ.get('POSTGRES_USER', default="")
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', default="")
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': POSTGRES_DB,
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': POSTGRES_HOST,
+        'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -99,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -109,15 +120,20 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_L10N = True
 
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+# Django Auth Settings
+LOGIN_URL = "account:login"
+LOGIN_REDIRECT_URL = "public:index"
+LOGOUT_REDIRECT_URL = "public:index"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "shawnpfiore@yahoo.com"

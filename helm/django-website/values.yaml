@@ -8,7 +8,7 @@ image:
   repository: shawnpfiore/instructor-website
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v0.1.13
+  tag: v0.1.17
 
 imagePullSecrets: 
   - name: regcred

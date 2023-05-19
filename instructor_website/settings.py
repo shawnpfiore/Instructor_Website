@@ -130,10 +130,46 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-# Django Auth Settings
+# Django Dev Auth Settings
 LOGIN_URL = "account:login"
 LOGIN_REDIRECT_URL = "public:index"
 LOGOUT_REDIRECT_URL = "public:index"
 
+# Email settings
+"""
+EMAIL_HOST = "localhost"
+EMAIL_PORT = "1025"
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+EMAIL_USE_TLS = False
+"""
+# Django Prod Auth Settings
+"""
+
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "shawnpfiore@yahoo.com"
+DEFAULT_FROM_EMAIL = "shawnpfiore1978@gmail.com"
+"""
+LOGIN_URL = "account:login"
+LOGIN_REDIRECT_URL = "public:index"
+LOGOUT_REDIRECT_URL = "public:index"
+
+# Email settings for gmail
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "shawnpfiore1978@gmail.com"
+EMAIL_HOST_PASSWORD = "tyuhazkibiaepxpa"
+DEFAULT_FROM_EMAIL = "sfiore@ecsorl.com"
+EMAIL_USE_TLS = True
+
+# Email settings
+# Website https://app-smtp.brevo.com/real-time
+# Sign in with Google account below
+"""
+EMAIL_HOST = "smtp-relay.sendinblue.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "shawnpfiore1978@gmail.com"
+EMAIL_HOST_PASSWORD = "mNJfIQhAnWvj3Zdk"
+DEFAULT_FROM_EMAIL = "sfiore@ecsorl.com"
+EMAIL_USE_TLS = True
+"""
